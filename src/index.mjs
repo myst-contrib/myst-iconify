@@ -6,7 +6,8 @@
 //   2. The transform fetches each SVG (disk-cached) and replaces placeholders
 //      with rendered icon spans (see `buildIconNode`).
 //   3. A pass over `link` nodes vertically centers any icon inside a link, and
-//      promotes icon-only links to button-styled clickable icons.
+//      promotes any link that starts with an icon to a button-styled CTA
+//      (icon-only or icon + text). Icons mid-sentence stay as inline decoration.
 //
 // Two render paths in `buildIconNode`:
 //   * Mono icons (SVGs with `fill="currentColor"`) render as a CSS mask on the
@@ -26,7 +27,7 @@ const ICONIFY_API = 'https://api.iconify.design';
 const DEFAULT_PREFIX = 'mdi';
 const CACHE_DIR = '_build/cache/iconify';
 
-// Tailwind utilities applied to icon-only links to make them feel like buttons.
+// Tailwind utilities applied to icon-led links to make them feel like buttons.
 const BUTTON_CLASSES = [
   'p-2 rounded no-underline',
   'text-stone-800 dark:text-stone-200',
@@ -97,8 +98,8 @@ const plugin = {
           Object.assign(node, buildIconNode(key, finalSvg));
         }
 
-        // Vertically center icons inside any link; promote icon-only links
-        // to button-styled clickable icons.
+        // Vertically center icons inside any link; promote links that start
+        // with an icon (icon-only or icon + text) to button-styled CTAs.
         for (const link of utils.selectAll('link', tree)) {
           const icons = (link.children || []).flatMap(collectIcons);
           if (!icons.length) continue;
@@ -108,9 +109,13 @@ const plugin = {
           const meaningful = (link.children || []).filter(
             (c) => !(c.type === 'text' && !c.value?.trim()),
           );
-          if (meaningful.length === 1 && meaningful[0] === icons[0] && icons.length === 1) {
+          if (meaningful[0] === icons[0]) {
             link.class = [link.class, BUTTON_CLASSES].filter(Boolean).join(' ');
-            icons[0].style = { ...icons[0].style, width: '1.5em', height: '1.5em' };
+            // Scale up the icon only for icon-only buttons; in icon + text
+            // buttons the icon should match the text size.
+            if (meaningful.length === 1 && icons.length === 1) {
+              icons[0].style = { ...icons[0].style, width: '1.5em', height: '1.5em' };
+            }
           }
         }
       },

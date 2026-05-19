@@ -5,17 +5,18 @@ Browse available icons at [icon-sets.iconify.design](https://icon-sets.iconify.d
 
 ## Basic usage
 
-The behavior will differ slightly based on whether you wrap the icon in a link.
+The behavior of an icon depends on where it sits relative to a link.
 
 :::::{myst:demo}
-Links that only wrap an icon are treated as a link button:
+Links that **start with an icon** are styled as buttons (icon-only or icon + text):
 
 - [{icon}`home`](https://mystmd.org)
+- [{icon}`download` Download](https://mystmd.org)
 
-Icons with no links are treated as in-line text:
+Icons in plain text, or mid-sentence inside a link, render in-line:
 
 - {icon}`home` Home
-- [{icon}`home` Home](https://mystmd.org)
+- [Read the {icon}`book` docs](https://mystmd.org)
 
 :::::
 

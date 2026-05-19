@@ -144,7 +144,7 @@ describe('iconify-resolve transform', () => {
     expect(icon.style.verticalAlign).toBe('middle');
   });
 
-  it('leaves links with mixed icon+text content unstyled', async () => {
+  it('promotes a link that starts with an icon followed by text to button-styled', async () => {
     const tree = {
       type: 'root',
       children: [
@@ -154,6 +154,32 @@ describe('iconify-resolve transform', () => {
           children: [
             { type: 'iconifyPlaceholder', key: 'mdi:home' },
             { type: 'text', value: ' Home' },
+          ],
+        },
+      ],
+    };
+    await transform.plugin(null, utils)(tree);
+    const link = tree.children[0];
+    expect(link.class).toContain('rounded');
+    expect(link.class).toContain('hover:bg-stone-200');
+    // Icon should stay text-sized (1em default) when text follows, not the
+    // 1.5em scale-up used for icon-only buttons.
+    const icon = link.children[0];
+    expect(icon.style.width).toBe('1em');
+    expect(icon.style.verticalAlign).toBe('middle');
+  });
+
+  it('leaves links with an icon mid-sentence unstyled', async () => {
+    const tree = {
+      type: 'root',
+      children: [
+        {
+          type: 'link',
+          url: 'https://github.com/example',
+          children: [
+            { type: 'text', value: 'Read the ' },
+            { type: 'iconifyPlaceholder', key: 'mdi:book' },
+            { type: 'text', value: ' docs' },
           ],
         },
       ],
