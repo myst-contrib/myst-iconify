@@ -1,6 +1,6 @@
 {
   "name": "@jupyter-book/myst-plugin-iconify",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "MyST plugin to render inline icons via the Iconify API",
   "type": "module",
   "main": "dist/index.mjs",

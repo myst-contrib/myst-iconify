@@ -78,3 +78,18 @@ npm run build
 ## Development
 
 Icons are fetched from the [Iconify API](https://api.iconify.design) **at build time**, then cached/embedded as inline SVGs that are base64-encoded.
+
+## Releasing
+
+Releases are cut by publishing a GitHub release.
+The [`release.yml`](.github/workflows/release.yml) workflow then runs the test suite, bundles `dist/index.mjs`, and attaches it to the release as an asset.
+
+1. Bump `version` in `package.json` to match the new release (e.g., `0.2.0`).
+2. Commit and push the bump.
+3. Create a release with a matching `v`-prefixed tag and auto-generated notes:
+
+   ```bash
+   gh release create v0.2.0 --generate-notes
+   ```
+
+4. Wait for the `release.yml` workflow to finish. It uploads `dist/index.mjs` to the release.
