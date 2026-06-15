@@ -84,7 +84,7 @@ Color only affects mono-color icons (those using `currentColor`). Multi-color ic
 MyST supports [site parts](https://mystmd.org/guide/document-parts) for adding content to theme UI elements like the navigation bar.
 You can use `{icon}` roles in parts just like any other MyST content.
 
-For example, this documentation site adds GitHub and npm icon links to the navbar with:
+For example, this documentation site adds GitHub and MyST Community Contributions icon links to the navbar with:
 
 **`myst.yml`:**
 
@@ -98,7 +98,7 @@ site:
 
 ```markdown
 [{icon}`simple-icons:github`](https://github.com/choldgraf/myst-iconify)
-[{icon}`simple-icons:npm`](https://www.npmjs.com/package/myst-iconify)
+[{icon}`mdi:book-open-variant`](https://contrib.mystmd.org)
 ```
 
 Look at the top-right of this page to see the result.

@@ -23,3 +23,5 @@ site:
   template: book-theme
   parts:
     navbar_end: parts/navbar_end.md
+    footer: |
+      Part of [MyST Community Contributions](https://contrib.mystmd.org) - community plugins, themes, and templates for the [MyST Document Engine](https://mystmd.org).
