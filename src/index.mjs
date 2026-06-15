@@ -29,7 +29,7 @@ const CACHE_DIR = '_build/cache/iconify';
 
 // Tailwind utilities applied to icon-led links to make them feel like buttons.
 const BUTTON_CLASSES = [
-  'p-2 rounded no-underline',
+  'inline-flex items-center align-middle leading-none p-1 rounded no-underline',
   'text-stone-800 dark:text-stone-200',
   'hover:bg-stone-200 dark:hover:bg-stone-700 transition-colors',
 ].join(' ');
